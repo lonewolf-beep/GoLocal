@@ -1,0 +1,9 @@
+# GoLocal Root .htaccess
+# Place this file in the root GoLocal directory (same level as app/, public/, config/)
+
+RewriteEngine On
+
+# Redirect all requests to public directory
+RewriteCond %{REQUEST_URI} !^/GoLocal/public/
+RewriteCond %{REQUEST_URI} !^/GoLocal/public$
+RewriteRule ^(.*)$ /GoLocal/public/$1 [R=301,L]
