@@ -6,7 +6,7 @@ define('DB_USER', 'root');
 define('DB_PASS', ''); // Change this to your MySQL password
 
 // Application Configuration
-define('BASE_URL', 'http://localhost/GoLocal/public'); // Changed this line
+define('BASE_URL', 'http://localhost/GoLocal/public'); // Updated this line
 define('APP_NAME', 'GoLocal');
 define('APP_VERSION', '1.0.0');
 
