@@ -44,6 +44,133 @@ ob_start();
     </div>
 </section>
 
+<!-- Featured Events Section -->
+<?php if (!empty($featuredEvents)): ?>
+<section class="featured-events">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-star"></i> Featured Events</h2>
+            <p>Don't miss these amazing cultural experiences happening soon</p>
+            <a href="<?= BASE_URL ?>/events" class="btn btn-outline">
+                View All Events <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="featured-events-grid">
+            <?php foreach ($featuredEvents as $event): ?>
+                <div class="featured-event-card">
+                    <div class="featured-event-image">
+                        <img src="<?= $event['image_url'] ?: BASE_URL . '/images/default-event.jpg' ?>" 
+                             alt="<?= htmlspecialchars($event['title']) ?>">
+                        <div class="featured-event-date">
+                            <div class="date-day"><?= date('j', strtotime($event['event_date'])) ?></div>
+                            <div class="date-month"><?= date('M', strtotime($event['event_date'])) ?></div>
+                        </div>
+                        <div class="featured-event-category">
+                            <?= ucfirst($event['category']) ?>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-event-content">
+                        <h3>
+                            <a href="<?= BASE_URL ?>/events/show/<?= $event['id'] ?>">
+                                <?= htmlspecialchars($event['title']) ?>
+                            </a>
+                        </h3>
+                        
+                        <div class="featured-event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <?= htmlspecialchars($event['city']) ?>
+                            <?php if ($event['venue']): ?>
+                                - <?= htmlspecialchars($event['venue']) ?>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <?php if ($event['short_description']): ?>
+                            <p class="featured-event-description">
+                                <?= htmlspecialchars($event['short_description']) ?>
+                            </p>
+                        <?php endif; ?>
+                        
+                        <div class="featured-event-footer">
+                            <div class="featured-event-price">
+                                <?php if ($event['price'] == 0): ?>
+                                    <span class="price-free">Free</span>
+                                <?php else: ?>
+                                    <span class="price-paid">৳<?= number_format($event['price'], 2) ?></span>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <a href="<?= BASE_URL ?>/events/show/<?= $event['id'] ?>" class="btn btn-primary btn-sm">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- Upcoming Events Quick List -->
+<?php if (!empty($upcomingEvents)): ?>
+<section class="upcoming-events">
+    <div class="container">
+        <div class="upcoming-events-content">
+            <div class="upcoming-events-text">
+                <h2><i class="fas fa-calendar-check"></i> Coming Up Soon</h2>
+                <p>Mark your calendar for these exciting upcoming events</p>
+            </div>
+            
+            <div class="upcoming-events-list">
+                <?php foreach ($upcomingEvents as $event): ?>
+                    <div class="upcoming-event-item">
+                        <div class="upcoming-event-date">
+                            <div class="date-number"><?= date('j', strtotime($event['event_date'])) ?></div>
+                            <div class="date-text"><?= date('M Y', strtotime($event['event_date'])) ?></div>
+                        </div>
+                        
+                        <div class="upcoming-event-details">
+                            <h4>
+                                <a href="<?= BASE_URL ?>/events/show/<?= $event['id'] ?>">
+                                    <?= htmlspecialchars($event['title']) ?>
+                                </a>
+                            </h4>
+                            <div class="upcoming-event-meta">
+                                <span class="event-city">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <?= htmlspecialchars($event['city']) ?>
+                                </span>
+                                <span class="event-category">
+                                    <i class="fas fa-tag"></i>
+                                    <?= ucfirst($event['category']) ?>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="upcoming-event-price">
+                            <?php if ($event['price'] == 0): ?>
+                                <span class="price-free">Free</span>
+                            <?php else: ?>
+                                <span class="price-paid">৳<?= number_format($event['price']) ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                
+                <div class="upcoming-events-more">
+                    <a href="<?= BASE_URL ?>/events" class="btn btn-outline">
+                        <i class="fas fa-calendar-alt"></i>
+                        View All Events
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- Features Section -->
 <section class="features" id="features">
     <div class="container">
@@ -185,3 +312,8 @@ ob_start();
 $content = ob_get_clean();
 require VIEW_PATH . '/layouts/main.php';
 ?>
+
+
+
+
+

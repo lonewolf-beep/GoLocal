@@ -1,5 +1,5 @@
 <?php
-// GoLocal Entry Point
+// GoLocal Entry Point - Updated for Sprint 2
 require_once '../config/config.php';
 require_once APP_PATH . '/core/Database.php';
 require_once APP_PATH . '/core/Session.php';
@@ -22,10 +22,30 @@ $router->addRoute('auth/login', 'AuthController', 'login');
 $router->addRoute('auth/register', 'AuthController', 'register');
 $router->addRoute('auth/logout', 'AuthController', 'logout');
 
-// Get the current URI
+// Event routes - Sprint 2
+$router->addRoute('events', 'EventController', 'index');
+$router->addRoute('events/index', 'EventController', 'index');
+$router->addRoute('events/search', 'EventController', 'search');
+$router->addRoute('events/getByCity', 'EventController', 'getByCity');
+$router->addRoute('events/getFeatured', 'EventController', 'getFeatured');
+
+// Get the current URI and clean it
 $uri = $_SERVER['REQUEST_URI'];
-$uri = str_replace('/GoLocal/public', '', $uri); // Remove base path
+
+// Remove the base path
+$basePath = '/GoLocal/public';
+if (strpos($uri, $basePath) === 0) {
+    $uri = substr($uri, strlen($basePath));
+}
+
+// Remove query string
+$uri = strtok($uri, '?');
 $uri = trim($uri, '/');
+
+// Handle event show route with dynamic ID
+if (strpos($uri, 'events/show/') === 0) {
+    $router->addRoute($uri, 'EventController', 'show');
+}
 
 // Dispatch the request
 try {
